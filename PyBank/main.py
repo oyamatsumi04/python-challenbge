@@ -12,32 +12,26 @@ import os
 
 pybank_csv = os.path.join("PyBank.csv")
 
-
-#creates the function 
-def financial_analysis(financial_data):
-    total_volume=0.
-    for volume in financial_data:
-        total_volume+=int(financial_data[1])
-    
     
 #opens the csv, reads the first row as the header
 with open(pybank_csv, newline="") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
     header=next(csvreader)
+ 
+    #sums all values in column 2
+    total_volume=sum(float(r[1]) for r in csvreader)
     
+    #resets the for loop location to the top row
+    csvfile.seek(0)
     
-#counts the number of rows in the csv without the header    
-    month_count=sum(1 for line in csvfile)
+    #counts the number of rows in the csv without the header    
+    month_count=(sum(1 for line in csvreader))-1
     
-    
-#retreives data from the csv
-    for rows in csvreader:
-        financial_analysis(rows)
-
-
 #prints final financial analysis    
+print("")
 print("Financial Analysis")
 print("---------------------------------")
 print("Total Months: " + str(month_count))
 print("Total: $" + str(total_volume))
+
     
